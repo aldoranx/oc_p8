@@ -1,21 +1,26 @@
 pipeline {
-    agent any
-
+    agent { 
+         docker {
+            filename 'Dockerfile.test'
+        }
+    }
     stages {
-        stage('Build') {
+        stage('install') {
             steps {
                 sh 'sudo composer update --ignore-platform-reqs'
+                sh 'sudo composer install --ignore-platform-reqs
             }
         }
-        stage('Test') {
+        stage('unitTest') {
             steps {
-                echo 'Testing..'
+                sh 'sudo php -d date.timezone=UTC ./vendor/bin/phpunit -c tests/Unit/phpunit.xml'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
+        
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'vendor/', fingerprint: true
         }
     }
 }
