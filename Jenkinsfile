@@ -8,7 +8,7 @@ pipeline {
         stage('install') {
             steps {
                 sh 'sudo composer update --ignore-platform-reqs'
-                sh 'sudo composer install --ignore-platform-reqs
+                sh 'sudo composer install --ignore-platform-reqs'
             }
         }
         stage('unitTest') {
