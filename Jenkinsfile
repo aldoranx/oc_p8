@@ -1,25 +1,21 @@
 pipeline {
-    agent { 
-         dockerfile {
-            filename 'Dockerfile.test'
-        }
-    }
+    agent any
+
     stages {
-        stage('install') {
+        stage('Build') {
             steps {
-                sh 'composer install -n'
+                sh 'composer install'
             }
         }
-        stage('unitTest') {
+        stage('Test') {
             steps {
-                sh './vendor/bin/phpunit tests/Unit'
+                echo 'Testing..'
             }
         }
-        
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'vendor/', fingerprint: true
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
         }
     }
 }
