@@ -1,14 +1,20 @@
 pipeline {
-    agent {
-         dockerfile {
-            filename 'Dockerfile.test'
-        }
-    }
+    agent any
+
     stages {
+        stage('Build') {
+            steps {
+                sh 'composer install'
+            }
+        }
         stage('Test') {
             steps {
-                sh 'sudo composer update --ignore-platform-reqs'
-                sh 'sudo composer install --ignore-platform-reqs'
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
