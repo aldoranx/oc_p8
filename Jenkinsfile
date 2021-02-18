@@ -7,8 +7,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'composer update --ignore-platform-reqs'
-                sh 'composer install --ignore-platform-reqs'
+                sh 'sudo composer update --ignore-platform-reqs'
+                sh 'sudo composer install --ignore-platform-reqs'
             }
         }
     }
