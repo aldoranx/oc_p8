@@ -25,7 +25,5 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 COPY . /var/www/html
 WORKDIR /var/www/html
-RUN composer update  --ignore-platform-reqs
-RUN composer install --ignore-platform-reqs
 RUN chown -R www-data:www-data /var/www
 EXPOSE 80
