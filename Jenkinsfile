@@ -1,26 +1,25 @@
-pipeline {
-    agent { 
-         dockerfile {
-            filename 'Dockerfile.test'
+node {
+    def app
+
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
+
+        checkout scm
+    }
+
+    stage('Build image') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
+
+        app = docker.build("prestashop/prestashop-git
+")
+    }
+
+   stage('Test image') {
+        /* Ideally, we would run a test framework against our image.
+         * For this example, we're using a Volkswagen-type approach ;-) */
+
+        app.inside {
+            sh 'echo "Tests passed"'
         }
     }
-    stages {
-        stage('Pre-Build') {
-            steps {
-                sh 'composer update --ignore-platform-reqs'
-                sh 'composer install --ignore-platform-reqs'
-                sh 'sudo php -d date.timezone=UTC ./vendor/bin/phpunit -c tests/Unit/phpunit.xml'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    }
-}
