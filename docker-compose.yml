@@ -33,7 +33,7 @@ services:
       PS_FOLDER_ADMIN: ${PS_FOLDER_ADMIN:-admin-dev}
     command: ["/tmp/wait-for-it.sh", "--timeout=60", "--strict", "mysql:3306", "--", "/tmp/docker_run_git.sh"]
     ports:
-      - "8001:80"
+      - "8013:80"
     volumes:
       - ./:/var/www/html/:delegated
       - vendor:/var/www/html/vendor
